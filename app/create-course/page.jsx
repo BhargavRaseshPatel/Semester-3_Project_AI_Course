@@ -8,9 +8,19 @@ import SelectCategory from './_components/SelectCategory';
 import TopicDescription from './_components/TopicDescription';
 import SelectOption from './_components/SelectOption';
 import { UserInputContext } from '../_context/UserInputContext';
+import { GenerateCourseLayout_AI } from './../../configs/AiModal';
+import LoadingDialog from './_components/LoadingDialog';
+import { db } from '@/configs/db';
+import { CourseList } from '@/configs/schema';
+import uuid4 from 'uuid4';
+import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 
 function CreateCourse() {
     const [activeIndex, setActiveIndex] = useState(0)
+
+    const { user } = useUser();
+    const router = useRouter()
 
     const StepperOptions = [
         {
@@ -32,6 +42,7 @@ function CreateCourse() {
     ]
 
     const { userCourseInput, setUserCourseInput } = useContext(UserInputContext)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         console.log(userCourseInput)
@@ -49,11 +60,44 @@ function CreateCourse() {
         if (activeIndex == 1 && (userCourseInput?.topic?.length == 0 || userCourseInput?.topic == undefined)) {
             return true
         }
-        else if (activeIndex == 2 && (userCourseInput?.level == undefined || userCourseInput?.duration == undefined || 
-             userCourseInput?.displayVideo == undefined ||  userCourseInput?.noOfChapter == undefined)) {
+        else if (activeIndex == 2 && (userCourseInput?.level == undefined || userCourseInput?.duration == undefined ||
+            userCourseInput?.displayVideo == undefined || userCourseInput?.noOfChapter == undefined)) {
             return true
         }
         return false
+    }
+
+    const GenerateCourseLayout = async () => {
+        setLoading(true);
+        const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Duration Along with ChapterName:';
+        const USER_INPUT_PROMPT = `Category: ${userCourseInput.category} \n Topic: ${userCourseInput?.topic} \n Description: ${userCourseInput?.description} \n Level: ${userCourseInput?.level} \n Duration: ${userCourseInput?.duration} \n DisplayVideo: ${userCourseInput?.displayVideo} \n NoOfChapters: ${userCourseInput?.noOfChapter}`;
+        const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
+        console.log(FINAL_PROMPT);
+
+        const result = await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
+        console.log(result.response?.text());
+        console.log(JSON.parse(result.response?.text()));
+        setLoading(false);
+        SaveCourseLayoutInDb(JSON.parse(result.response?.text()));
+    }
+
+    const SaveCourseLayoutInDb = async (courseLayout) => {
+        setLoading(true);
+        var id = uuid4(); // Course Id
+        const result = await db.insert(CourseList).values({
+            courseId: id,
+            name: userCourseInput?.topic,
+            category: userCourseInput?.category,
+            level: userCourseInput?.level,
+            courseOutput: courseLayout,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            userName: user?.fullName,
+            userProfileImage: user?.imageUrl
+        })
+
+        console.log("Finished", result);
+        router.replace('/create-course/'+id);
+        setLoading(false);
     }
     return (
         <div>
@@ -89,9 +133,10 @@ function CreateCourse() {
                 <div className='flex justify-between mt-10'>
                     <Button variant='outline' disabled={activeIndex == 0} onClick={() => setActiveIndex(activeIndex - 1)}>Previous</Button>
                     {activeIndex < 2 && <Button disabled={checkStatus()} onClick={() => setActiveIndex(activeIndex + 1)}>Next</Button>}
-                    {activeIndex == 2 && <Button  disabled={checkStatus()}>Generate Course Layout</Button>}
+                    {activeIndex == 2 && <Button disabled={checkStatus()} onClick={() => GenerateCourseLayout()}>Generate Course Layout</Button>}
                 </div>
             </div>
+            <LoadingDialog loading={loading} />
         </div>
     )
 }
