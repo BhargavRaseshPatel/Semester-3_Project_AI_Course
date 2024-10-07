@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image'
-import React from 'react'
+import React, { useContext } from 'react'
 import { IoHomeOutline } from "react-icons/io5";
 import { HiCircleStack } from "react-icons/hi2";
 import { GoShieldCheck } from "react-icons/go";
@@ -8,8 +8,11 @@ import { CiPower } from "react-icons/ci";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Progress } from "@/components/ui/progress"
+import { UserCourseListContext } from '@/app/_context/UserCourseList'; 
 
 function SlideBar() {
+    // Get all courses created by the user
+    const { userCourseList, setUserCourseList } = useContext(UserCourseListContext)
     const Menu = [
         {
             id: 1,
@@ -55,8 +58,8 @@ function SlideBar() {
                 ))}
             </ul>
             <div className='absolute bottom-10 w-[80%]'>
-                <Progress value={50} max={100} />
-                <h3>3 out of 5 course created</h3>
+                <Progress value={userCourseList?.length/15 * 100} max={100} />
+                <h3>{userCourseList?.length} out of 5 course created</h3>
                 <h2 className='text-xs text-gray-500'>upgrade your plan for unlimited course generate</h2>
             </div>
         </div>

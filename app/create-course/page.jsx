@@ -69,8 +69,8 @@ function CreateCourse() {
 
     const GenerateCourseLayout = async () => {
         setLoading(true);
-        const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Duration Along with ChapterName:';
-        const USER_INPUT_PROMPT = `Category: ${userCourseInput.category} \n Topic: ${userCourseInput?.topic} \n Description: ${userCourseInput?.description} \n Level: ${userCourseInput?.level} \n Duration: ${userCourseInput?.duration} \n DisplayVideo: ${userCourseInput?.displayVideo} \n NoOfChapters: ${userCourseInput?.noOfChapter}`;
+        const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Along with ChapterName,about, Duration: '
+        const USER_INPUT_PROMPT = `Category: ${userCourseInput.category} \n Topic: ${userCourseInput?.topic} \n Level: ${userCourseInput?.level} \n Duration: ${userCourseInput?.duration} \n DisplayVideo: ${userCourseInput?.displayVideo} \n NoOfChapters: ${userCourseInput?.noOfChapter}`;
         const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
         console.log(FINAL_PROMPT);
 

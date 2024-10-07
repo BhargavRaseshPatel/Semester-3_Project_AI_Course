@@ -1,20 +1,26 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
 import SlideBar from './_components/SlideBar'
 import Header from './_components/Header'
+import { UserCourseListContext } from '../_context/UserCourseList'
 
 function DashboardLayout({ children }) {
+    const [userCourseList, setUserCourseList] = useState([])
+
     return (
-        <div >
-            <div className='md:w-64 hidden md:block'>
-                <SlideBar />
-            </div>
-            <div className='md:ml-64'>
-                <Header/>
-                <div className='flex p-10'>
-                    {children}
+        <UserCourseListContext.Provider value={{userCourseList, setUserCourseList}}>
+            <div >
+                <div className='md:w-64 hidden md:block'>
+                    <SlideBar />
+                </div>
+                <div className='md:ml-64'>
+                    <Header />
+                    <div className='flex p-10'>
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </UserCourseListContext.Provider>
     )
 }
 
