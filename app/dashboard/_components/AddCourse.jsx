@@ -18,7 +18,7 @@ function AddCourse() {
             </div>
 
             <Link href={ userCourseList?.length >= 15 ? '/dashboard/upgrad' : '/create-course' }>
-                <Button>+ Create AI course</Button>
+                <Button className='text-xl pb-3 pt-3'>+ Create AI course</Button>
             </Link>
         </div>
     )

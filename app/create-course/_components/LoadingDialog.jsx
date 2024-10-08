@@ -18,7 +18,7 @@ function LoadingDialog({ loading }) {
             <AlertDialogContent>
                 <AlertDialogTitle visualHidden>Loading</AlertDialogTitle>
                <div className='flex flex-col items-center py-10'>
-                <Image src={'/work-in-progress.png'} alt='image' width={100} height={100} />
+                <Image src={'/work-in-progress.png'} alt='image' width={100} height={100}  unoptimized />
                 <h2>Please wait... AI is working on your course</h2>
                </div>
             </AlertDialogContent>

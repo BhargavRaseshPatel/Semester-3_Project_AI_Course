@@ -43,9 +43,9 @@ function SlideBar() {
     const path = usePathname()
     return (
         <div className='fixed h-full md:w-64 p-5 shadow-md'>
-            <Image src={'/logo.png'} width={160} height={50} />
-            <hr></hr>
-
+            <div className='flex items-center gap-2 rounded-lg '>
+            <Image src={'/ai-course-create.png'} width={200} height={50} alt="logo image" className='mb-10 w-full rounded-lg'/>     
+            </div>
             <ul>
                 {Menu.map((item, map) => (
                     <Link href={item.path} key={map}>
@@ -59,7 +59,7 @@ function SlideBar() {
             </ul>
             <div className='absolute bottom-10 w-[80%]'>
                 <Progress value={userCourseList?.length/15 * 100} max={100} />
-                <h3>{userCourseList?.length} out of 5 course created</h3>
+                <h3>{userCourseList?.length} out of 15 course created</h3>
                 <h2 className='text-xs text-gray-500'>upgrade your plan for unlimited course generate</h2>
             </div>
         </div>

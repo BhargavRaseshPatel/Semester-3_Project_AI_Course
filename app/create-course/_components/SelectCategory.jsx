@@ -20,7 +20,7 @@ function SelectCategory() {
                     ${userCourseInput?.category == category.name && 'border-primary bg-blue-50'}`}
                 onClick={() => handleCategoryChange(category.name)}>
                     <Image src={category.icon} width={100} height={100} />
-                    <h2 className="mt-3 text-xl">{category.name}</h2>
+                    <h2>{category.name}</h2>
                 </div>
             ))}
         </div>

@@ -4,9 +4,10 @@ import React from 'react'
 
 function Header() {
     return (
-        <div className='flex justify-between items-center p-5 shadow-sm'>
-            <Image src={'/logo.png'} alt='no image' width={100} height={40} />
-            <UserButton />
+        <div className='flex justify-between items-center p-2 shadow-sm'>
+            <div></div>
+            {/* <Image src={'/ai-course-create.png'} alt='no image' width={200} height={100} /> */}
+            <UserButton height={100} width={100}/>
         </div>
     )
 }

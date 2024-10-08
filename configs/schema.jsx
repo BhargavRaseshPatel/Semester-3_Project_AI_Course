@@ -14,10 +14,10 @@ export const CourseList = pgTable('courseList', {
 }
 )
 
-export const chapterContent = pgTable('chapters', {
+export const chapterContentSchema = pgTable('chapters', {
     id: serial('id').primaryKey(),
     courseId: varchar('courseId').notNull(),
     chapterId: integer('chapterId').notNull(),
     content: json('content').notNull(),
-    videoId: varchar('videoId').notNull()
+    videoId: varchar('videoId')
 })

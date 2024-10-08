@@ -7,7 +7,7 @@ const getVideos = async (searchTerm) => {
         part: 'snippet',
         q: searchTerm,
         typeof: 'video',
-        maxResults: 2,
+        maxResults: 1,
         key: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY
     }
 

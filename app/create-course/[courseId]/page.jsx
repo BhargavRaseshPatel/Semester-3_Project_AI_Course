@@ -1,6 +1,6 @@
 "use client";
 import { db } from '@/configs/db';
-import { chapterContent, CourseList } from '@/configs/schema';
+import { chapterContentSchema, CourseList } from '@/configs/schema';
 import { useUser } from '@clerk/nextjs';
 import { eq } from 'drizzle-orm';
 import React, { useEffect, useState } from 'react'
@@ -27,52 +27,62 @@ function courseLayout({ params }) {
     const GetCourse = async () => {
         const result = await db.select().from(CourseList).
             where(eq(CourseList.courseId, params.courseId), eq(CourseList.createdBy, user?.primaryEmailAddress?.emailAddress))
-        console.log(result)
+        // console.log(result)
         setCourse(result[0])
     }
 
-    const GenerateChapterContent = () => {
-        console.log('clicked')
-        setLoading(true)
-        const chapters = course?.courseOutput?.Chapters
-        chapters.forEach(async (chapter, index) => {
-            const PROMPT = 'Explain the concept in Detail on Topic: ' + course?.name + ' Chapter: ' + chapter?.ChapterName + ', in JSON Format with list of array with field as title, explanation on give chapter in detail, Code Example(Code field in <precode> format) if applicable'
-            // console.log(PROMPT)
-
-            if(index == 0){
-                try{
-                    let videoId = ''
-                    // Generate Video URL
-                    service.getVideos(course?.name + ':' + chapter?.ChapterName).then((resp) => {
-                        console.log(resp)
-                        videoId = resp[0]?.id?.videoId
-                    })
-
-                    // Generate Chapter Content
-                    const result = await GenerateChapterContent_AI.sendMessage(PROMPT)
-                    console.log(result.response.text())
-                    const content = JSON.parse(result.response.text())
-
-                    console.log("Courer ID: ", course?.courseId)
-
-                    await db.insert(chapterContent).values({
+    const GenerateChapterContent = async () => {
+        // console.log('clicked');
+        setLoading(true);
+        const chapters = course?.courseOutput?.Chapters;
+    
+        if (!chapters || chapters.length === 0) {
+            setLoading(false);
+            return;
+        }
+    
+        try {
+            // Map each chapter to an async operation
+            const chapterPromises = chapters.map(async (chapter, index) => {
+                const PROMPT = 'Explain the concept in Detail on Topic: ' + course?.name + ' Chapter: ' + chapter?.ChapterName + ', in JSON Format with list of array with field as title, explanation on given chapter in detail, Code Example(Code field in <precode> format) if applicable';
+    
+                // Generate Video URL asynchronously
+                let videoId = '';
+                try {
+                    const videoResp = await service.getVideos(course?.name + ':' + chapter?.ChapterName);
+                    videoId = videoResp[0]?.id?.videoId || '';
+                } catch (videoError) {
+                    console.error('Error fetching video:', videoError);
+                }
+    
+                // Generate Chapter Content asynchronously
+                try {
+                    const result = await GenerateChapterContent_AI.sendMessage(PROMPT);
+                    const content = JSON.parse(await result.response.text());
+    
+                    // Save Chapter Content + Video URL asynchronously
+                    await db.insert(chapterContentSchema).values({
                         courseId: course?.courseId,
                         chapterId: index,
                         content: content,
                         videoId: videoId
-                    })
-
-                    // Save Capter Content + Video URL
-                    setLoading(false)
+                    });
+    
+                } catch (contentError) {
+                    console.error('Error generating chapter content:', contentError);
                 }
-                catch(e){
-                    setLoading(false)
-                    console.log(e)
-                }
-                router.replace('/create-course/'+course?.courseId+'/finish') 
-            }
-        })
-    }
+            });
+    
+            // Wait for all chapter operations to finish
+            await Promise.all(chapterPromises);
+    
+            setLoading(false);
+            router.replace('/create-course/' + course?.courseId + '/finish');
+        } catch (e) {
+            setLoading(false);
+            console.error('Error during content generation:', e);
+        }
+    }; 
 
     return (
         <div className='mt-10 px-7 md:px-20 lg:px-44'>
@@ -89,7 +99,6 @@ function courseLayout({ params }) {
             <ChapterList course={course} refreshData={() => GetCourse()} />
 
             <Button className="my-10" onClick={GenerateChapterContent}>Generate Course Content</Button>
-            {/* <LoadingDialog loading={loading} /> */}
         </div>
     )
 }
