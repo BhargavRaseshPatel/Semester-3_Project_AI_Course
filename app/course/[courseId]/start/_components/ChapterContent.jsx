@@ -1,8 +1,12 @@
 import React from 'react'
 import YouTube from 'react-youtube'
 import ReactMarkdown from 'react-markdown'
+import { Button } from '@/components/ui/button';
+import { db } from '@/configs/db';
+import { and, eq } from 'drizzle-orm';
+import { chapterContentSchema } from '@/configs/schema';
 
-function ChapterContent({ chapter, content }) {
+function ChapterContent({ chapter, content, refreshData }) {
     const opts = {
         height: '390',
         width: '640',
@@ -11,6 +15,13 @@ function ChapterContent({ chapter, content }) {
             autoplay: 0,
         },
     };
+
+    const makeComplete = () => {
+        // Update the chapter as completed
+        db.update(chapterContentSchema).set({ readContent: true }).where(and(eq(chapterContentSchema.chapterId,content.chapterId),eq(chapterContentSchema.courseId,content.courseId))).execute()
+        console.log('Completed')
+        refreshData(true)
+    }
 
     return (
         <div className='p-10'>
@@ -22,6 +33,7 @@ function ChapterContent({ chapter, content }) {
                 <YouTube videoId={content?.videoId} opts={opts} />
             </div>
 
+            {/* Content  */}
             <div>
                 {content?.content?.map((item, index) => (
                     <div className='p-5 bg-sky-50 mb-3 rounded-lg'>
@@ -37,7 +49,10 @@ function ChapterContent({ chapter, content }) {
                     </div>
                 ))}
             </div>
-            {/* Content  */}
+
+            <div>
+                {content?.content && !content?.readContent && <Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
+            </div>
 
         </div>
     )

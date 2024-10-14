@@ -77,8 +77,22 @@ function CreateCourse() {
         const result = await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
         console.log(result.response?.text());
         console.log(JSON.parse(result.response?.text()));
+        // result.response?.text().Chapters?.map((chapter, index) => {
+        //     [...chapter, ChapterId=index]
+        // })
+
+        const json_data = JSON.parse(result.response?.text());
+
+        const updatedJsonData = {
+            ...json_data, // Spread the other properties of json_data
+            Chapters: json_data?.Chapters.map((chapter, index) => ({
+                ...chapter, // Keep the existing properties of each chapter
+                ChapterId: index // Add or update the ChapterId property
+            }))
+        };
+
         setLoading(false);
-        SaveCourseLayoutInDb(JSON.parse(result.response?.text()));
+        SaveCourseLayoutInDb(updatedJsonData);
     }
 
     const SaveCourseLayoutInDb = async (courseLayout) => {

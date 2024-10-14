@@ -4,7 +4,7 @@ import { IoBookOutline } from "react-icons/io5";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import DropdownOption from './DropdownOption';
 import { db } from '@/configs/db';
-import { CourseList } from '@/configs/schema';
+import { chapterContentSchema, CourseList } from '@/configs/schema';
 import { eq } from 'drizzle-orm';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 function CourseCard({ course, refreshData, displayUser = false }) {
   const handleOnDelete = async () => {
     const resp = await db.delete(CourseList).where(eq(CourseList.courseId, course?.courseId)).returning({ id: CourseList?.id })
-
+    db.delete(chapterContentSchema).where(eq(chapterContentSchema.courseId, course?.courseId))
     if (resp) {
       refreshData()
     }
@@ -27,10 +27,10 @@ function CourseCard({ course, refreshData, displayUser = false }) {
           {course?.courseOutput?.CourseName} {!displayUser && <DropdownOption handleOnDelete={() => handleOnDelete()}> <FaEllipsisVertical /> </DropdownOption>}
           </h2>
 
-        <p className='text-sm text-gray-400 my-1'>{course?.category}</p>
+        <p className='text-sm text-gray-600 my-1'>{course?.category}</p>
         <div className='flex items-center justify-between'>
-          <h2 className='flex gap-2 items-center p-1 bg-purple-50 text-primary text-sm'><IoBookOutline />{course?.courseOutput?.NoOfChapters} chapters</h2>
-          <h2 className='text-sm bg-purple-50 text-primary p-1 rounded-sm'>{course?.courseOutput?.Level}</h2>
+          <h2 className='flex gap-2 items-center p-1 bg-purple-50 px-2 rounded-md text-primary text-sm'><IoBookOutline />{course?.courseOutput?.NoOfChapters} chapters</h2>
+          <h2 className='text-sm bg-purple-50 text-primary p-1 px-2 rounded-md'>{course?.courseOutput?.Level}</h2>
         </div>
 
         {displayUser && <div className='flex gap-2 items-center'>

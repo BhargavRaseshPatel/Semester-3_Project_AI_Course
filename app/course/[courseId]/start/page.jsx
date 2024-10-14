@@ -6,12 +6,15 @@ import { and, eq } from 'drizzle-orm'
 import React, { useEffect, useState } from 'react'
 import ChapterListCard from './_components/ChapterListCard'
 import ChapterContent from './_components/ChapterContent'
+import { useUser } from '@clerk/nextjs'
 
 function CourseStart({ params }) {
 
   const [selectedChapter, setSelectedChapter] = useState()
   const [course, setCourse] = useState([])
   const [chapterContent, setChapterContent] = useState([])
+  const {user} = useUser()
+
   useEffect(() => {
     GetCourse()
   }, [])
@@ -47,7 +50,7 @@ function CourseStart({ params }) {
       </div>  
       {/* Conten Div  */}
       <div className='md:ml-72'>
-        <ChapterContent chapter={selectedChapter} content={chapterContent}/>
+        <ChapterContent chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()}/>
       </div>
     </div>
   )

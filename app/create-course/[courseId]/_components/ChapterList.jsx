@@ -2,8 +2,11 @@ import React from 'react'
 import { HiOutlineClock } from "react-icons/hi2";
 import { HiMiniCheckCircle } from "react-icons/hi2";
 import EditChapters from './EditChapter';
+import { useUser } from '@clerk/nextjs';
 
-function ChapterList({ course, refreshData, edit = true }) {
+function ChapterList({ course, refreshData, chapterList = null, edit = true }) {
+    const {user} = useUser()
+    
     return (
         <div className='mt-3'>
             <h2 className='font-medium text-xl'>Chapters</h2>
@@ -19,7 +22,8 @@ function ChapterList({ course, refreshData, edit = true }) {
                                 <p className='flex items-center gap-2 text-primary'><HiOutlineClock />{chapter?.Duration}</p>
                             </div>
                         </div>
-                        <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' />
+                        {/* { chapterList[index] == null ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : chapterList[index]?.readContent == false ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : <HiMiniCheckCircle className='text-4xl text-primary float-none' />} */}
+                        { chapterList != null && course?.createdBy == user?.primaryEmailAddress?.emailAddress && chapterList.find(item => item?.chapterId == chapter?.ChapterId)?.readContent ? <HiMiniCheckCircle className='text-4xl text-primary float-none' /> : <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' />}
                     </div>
                 ))}
             </div>
