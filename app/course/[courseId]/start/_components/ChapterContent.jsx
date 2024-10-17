@@ -6,7 +6,7 @@ import { db } from '@/configs/db';
 import { and, eq } from 'drizzle-orm';
 import { chapterContentSchema } from '@/configs/schema';
 
-function ChapterContent({ chapter, content, refreshData }) {
+function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
     const opts = {
         height: '390',
         width: '640',
@@ -47,11 +47,11 @@ function ChapterContent({ chapter, content, refreshData }) {
                             </pre>
                         </div>}
                     </div>
-                ))}
+                ))} 
             </div>
 
             <div>
-                {content?.content && !content?.readContent && <Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
+                {content?.content && !content?.readContent && showCompleteButton &&<Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
             </div>
 
         </div>

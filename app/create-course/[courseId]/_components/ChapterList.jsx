@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { use, useEffect } from 'react'
 import { HiOutlineClock } from "react-icons/hi2";
 import { HiMiniCheckCircle } from "react-icons/hi2";
 import EditChapters from './EditChapter';
@@ -6,6 +6,10 @@ import { useUser } from '@clerk/nextjs';
 
 function ChapterList({ course, refreshData, chapterList = null, edit = true }) {
     const {user} = useUser()
+
+    useEffect(() => {
+        console.log(chapterList)
+    })
     
     return (
         <div className='mt-3'>
@@ -23,7 +27,7 @@ function ChapterList({ course, refreshData, chapterList = null, edit = true }) {
                             </div>
                         </div>
                         {/* { chapterList[index] == null ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : chapterList[index]?.readContent == false ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : <HiMiniCheckCircle className='text-4xl text-primary float-none' />} */}
-                        { chapterList != null && course?.createdBy == user?.primaryEmailAddress?.emailAddress && chapterList.find(item => item?.chapterId == chapter?.ChapterId)?.readContent ? <HiMiniCheckCircle className='text-4xl text-primary float-none' /> : <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' />}
+                        {course?.createdBy == user?.primaryEmailAddress?.emailAddress ? chapterList == null ? null : chapterList.find(item => item?.chapterId == chapter?.ChapterId)?.readContent ? <HiMiniCheckCircle className='text-4xl text-primary float-none' /> : <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : null}
                     </div>
                 ))}
             </div>

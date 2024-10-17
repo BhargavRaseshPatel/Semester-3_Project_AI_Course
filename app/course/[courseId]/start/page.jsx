@@ -14,6 +14,7 @@ function CourseStart({ params }) {
   const [course, setCourse] = useState([])
   const [chapterContent, setChapterContent] = useState([])
   const {user} = useUser()
+  const [showCompleteButton, setShowCompleteButton] = useState(false)
 
   useEffect(() => {
     GetCourse()
@@ -25,13 +26,17 @@ function CourseStart({ params }) {
     console.log(result[0])
     setCourse(result[0])
     GetSelectedChapterContent(0)
+
+    if(user?.primaryEmailAddress?.emailAddress == result[0]?.createdBy){
+      setShowCompleteButton(true)
+    }
   }
 
   const GetSelectedChapterContent = async (chapterId) => {
     const result = await db.select().from(chapterContentSchema)
     .where(and(eq(chapterContentSchema.courseId, params.courseId), eq(chapterContentSchema.chapterId, chapterId)))
 
-    console.log("Result : ",result[0])
+    // console.log("Result : ",result[0])
     setChapterContent(result[0])
   }
   return (
@@ -50,7 +55,7 @@ function CourseStart({ params }) {
       </div>  
       {/* Conten Div  */}
       <div className='md:ml-72'>
-        <ChapterContent chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()}/>
+        <ChapterContent chapter={selectedChapter} content={chapterContent} showCompleteButton={showCompleteButton} refreshData={() => GetCourse()}/>
       </div>
     </div>
   )
