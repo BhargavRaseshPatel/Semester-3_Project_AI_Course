@@ -25,7 +25,7 @@ function CourseCard({ course, refreshData, displayUser = false }) {
       <div className='p-2'>
         <h2 className='font-medium text-lg flex justify-between items-center'>
           {course?.courseOutput?.CourseName} {!displayUser && <DropdownOption handleOnDelete={() => handleOnDelete()}> <FaEllipsisVertical /> </DropdownOption>}
-          </h2>
+        </h2>
 
         <p className='text-sm text-gray-600 my-1'>{course?.category}</p>
         <div className='flex items-center justify-between'>

@@ -10,10 +10,10 @@ function DashboardLayout({ children }) {
     return (
         <UserCourseListContext.Provider value={{userCourseList, setUserCourseList}}>
             <div >
-                <div className='md:w-64 hidden md:block'>
+                <div className='lg:w-64 hidden lg:block'>
                     <SlideBar />
                 </div>
-                <div className='md:ml-64'>
+                <div className='lg:ml-64'>
                     <Header />
                     <div className='flex p-10'>
                         {children}
