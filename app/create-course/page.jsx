@@ -31,7 +31,7 @@ function CreateCourse() {
         },
         {
             id: 2,
-            name: 'Topic & Desc',
+            name: 'Topic',
             icon: <HiLightBulb />
         },
         {
@@ -110,7 +110,7 @@ function CreateCourse() {
         })
 
         console.log("Finished", result);
-        router.replace('/create-course/'+id);
+        router.replace('/create-course/' + id);
         setLoading(false);
     }
     return (
@@ -127,9 +127,11 @@ function CreateCourse() {
                                 <div className={`bg-gray-200 p-3 rounded-full text-white ${activeIndex >= index && 'bg-purple-500'}`}>
                                     {item.icon}
                                 </div>
-                                <h2>{item.name}</h2>
+                                <h2 className='mt-4'>{item.name}</h2>
                             </div>
-                            {index != StepperOptions.length - 1 && <div className={`h-1 w-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-purple-500'}`}></div>}
+                            {index != StepperOptions.length - 1 && 
+                            <div className={`h-1 w-[40px] sm-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-purple-500'}`}>
+                            </div>}
                         </div>
                     ))}
                 </div>
