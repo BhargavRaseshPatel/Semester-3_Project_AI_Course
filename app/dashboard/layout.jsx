@@ -11,7 +11,7 @@ function DashboardLayout({ children }) {
         <UserCourseListContext.Provider value={{userCourseList, setUserCourseList}}>
             <div >
                 <div className='lg:w-64 hidden lg:block'>
-                    <SlideBar />
+                    <SlideBar showShadow/>
                 </div>
                 <div className='lg:ml-64'>
                     <Header />
