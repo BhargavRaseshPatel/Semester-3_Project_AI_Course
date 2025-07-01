@@ -21,7 +21,7 @@ function SelectOption() {
     }
 
     return (
-        <div className='px-10 md:px-20 lg:px-44'>
+        <div className='mx-2 md:mx-16 lg:mx-32'>
             <h2 className='my-5'>Select the Course Category</h2>
             <div className='grid grid-cols-2 gap-5'>
                 <div>
@@ -67,7 +67,7 @@ function SelectOption() {
 
                 <div>
                     <label className='text-sm'>No of Chapter</label>
-                    <Input type="number" defaultValue={userCourseInput?.noOfChapter}
+                    <Input max={15} min={1} type="number" defaultValue={userCourseInput?.noOfChapter}
                     onChange={(event) => handleInputChange('noOfChapter', event.target.value)}/>
                 </div>
             </div>

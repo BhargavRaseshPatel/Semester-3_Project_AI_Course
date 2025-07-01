@@ -8,9 +8,9 @@ function SelectCategory() {
 
     const handleCategoryChange = (category) => {
         setUserCourseInput((prev) => ({
-            ...prev,
+            ...prev,    
             category: category
-        }))
+        })) 
     }
 
     return (
