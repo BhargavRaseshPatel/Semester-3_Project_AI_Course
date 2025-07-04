@@ -7,7 +7,7 @@ import { HiOutlinePlayCircle } from "react-icons/hi2";
 function CourseDetail({ course }) {
     return (
         <div className='border p-6 rounded-xl shadow-sm mt-3'>
-            <div className='grid grid-cols-2 md:grid-cols-4'>
+            <div className='grid grid-cols-2 md:gap-0 gap-2 md:grid-cols-4'>
                 <div className='flex gap-2'>
                     <HiChartBar className='text-4xl text-primary'/>
                     <div>

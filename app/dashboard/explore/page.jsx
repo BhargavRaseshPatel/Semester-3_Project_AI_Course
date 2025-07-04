@@ -22,16 +22,16 @@ function Explore() {
   }
 
   return (
-    <div>
+    <div className='w-full'>
       <h2 className='font-bold text-3xl'>Explore more Projects</h2>
       <p>Explore more project build with AI by other users</p>
-      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-        {courseList?.map((course, index) => (
-          <div key={index}>
-            <CourseCard course={course} displayUser={true} />
-          </div>
-        ))}
-      </div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4 md:gap-5 gap-2 w-full'>
+          {courseList?.map((course, index) => (
+            <div key={index}>
+              <CourseCard course={course} displayUser={true} />
+            </div>
+          ))}
+        </div>
 
       <div className='flex justify-between mt-5'>
         {pageIndex != 0 && <Button onClick={() => setPageIndex(pageIndex - 1)}>Previous Page</Button>}

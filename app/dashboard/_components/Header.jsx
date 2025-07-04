@@ -17,10 +17,10 @@ import SlideBar from './SlideBar'
 
 function Header() {
     return (
-        <div className='flex justify-end items-center p-2 shadow-sm'>
+        <div className='flex justify-end items-center lg:p-1 p-3 shadow-sm'>
             {/* <Image src={'/ai-course-create.png'} alt='no image' width={200} height={100} /> */}
             <div className='lg:block hidden'>
-                <UserButton height={100} width={100} />
+                <UserButton />
             </div>
             <div className='lg:hidden block'>
                 <Sheet>
@@ -30,7 +30,6 @@ function Header() {
                         </svg>
                     </SheetTrigger>
                     <SheetContent className="w-80">
-                        {/* <SheetTitle >Are you absolutely sure?</SheetTitle> */}
                         <SheetTitle>
                             <VisuallyHidden>Edit Profile</VisuallyHidden>
                         </SheetTitle>
