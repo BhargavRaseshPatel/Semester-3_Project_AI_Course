@@ -15,7 +15,7 @@ function CourseBasicInfo({ course, refreshData, edit = true }) {
     }
 
     return (
-        <div className=' p-10 border border-gray-300 rounded-xl shadow-sm mt-5'>
+        <div className='md:p-10 p-5 border border-gray-300 rounded-xl shadow-sm mt-5'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                 <div>
                     <h2 className='flex gap-3 items-center font-bold text-2xl'>{course?.courseOutput?.CourseName}
