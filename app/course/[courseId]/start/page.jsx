@@ -74,7 +74,7 @@ function CourseStart({ params }) {
     setChapterContent(result[0])
   }
   return (
-    <div className=''>
+    <div className='w-screen max-w-screen overflow-x-hidden'>
       {/* Chapter List Side Bar  */}
       <div className='fixed w-0 hidden lg:block lg:w-72 h-screen border-r shadow-sm'>
         <h2 className='font-medium text-lg bg-primary p-3 text-white'>{course?.courseOutput?.CourseName}</h2>
@@ -90,7 +90,7 @@ function CourseStart({ params }) {
       {/* Content Div  */}
       <div>
 
-        <div className='lg:ml-72 pt-2'>
+        <div className='lg:ml-72'>
           <Header course={course} selectChapter={setSelectedChapter} getContent={GetSelectedChapterContent} />
           <ChapterContent chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()} />
         </div>

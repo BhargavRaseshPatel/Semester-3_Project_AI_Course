@@ -17,7 +17,7 @@ import ChapterListCard from './ChapterListCard'
 
 function Header({ course, selectChapter, getContent }) {
     return (
-        <div className='lg:hidden flex justify-end items-center lg:p-1 p-3 shadow-sm'>
+        <div className='lg:hidden flex justify-end items-center lg:p-1 p-2  shadow-sm'>
             <Sheet>
                 <SheetTrigger asChild>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-6 hover:cursor-pointer">
@@ -29,12 +29,11 @@ function Header({ course, selectChapter, getContent }) {
                         <VisuallyHidden>Edit Profile</VisuallyHidden>
                     </SheetTitle>
                     {/* <SlideBar /> */}
-                    <div className='border border-gray-300 rounded-lg'>
+                    <div className='border border-gray-300 rounded-lg mt-4'>
                         <h2 className='font-medium text-lg bg-primary p-3 rounded-tl-lg rounded-tr-lg text-white'>{course?.courseOutput?.CourseName}</h2>
                         <div>
                             {course?.courseOutput?.Chapters?.map((chapter, index) => (
                                 <SheetClose asChild>
-
                                     <div key={index} className={`cursor-pointer hover:bg-purple-50 ${selectChapter == chapter && 'bg-purple-100'}`}
                                         onClick={() => { selectChapter(chapter); getContent(index) }}>
                                         <ChapterListCard chapter={chapter} index={index} />

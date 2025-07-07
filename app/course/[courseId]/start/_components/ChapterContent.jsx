@@ -8,14 +8,14 @@ import { chapterContentSchema } from '@/configs/schema';
 
 function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
     const opts = {
-        height: '390',
-        width: '640',
+
+        width: '100%',
         playerVars: {
             // https://developers.google.com/youtube/player_parameters
             autoplay: 0,
         },
     };
-    
+
 
     const makeComplete = () => {
         // Update the chapter as completed
@@ -25,26 +25,32 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
     }
 
     return (
-        <div className='px-10'>
+        <div className='md:px-10 px-5 mt-1 sm:mt-2'>
             <h2 className='font-medium text-2xl'>{chapter?.ChapterName}</h2>
-            <p className='text-gray-400 mt-3'>{chapter?.about}</p>
+            <p className='text-gray-400 mt-1 sm:mt-1'>{chapter?.about}</p>
 
             {/* Video  */}
-            {content?.videoId && (<div className='flex justify-center my-6'>
-                <YouTube videoId={content?.videoId} opts={opts} />
-            </div>)}
+            {content?.videoId && (
+                <div className='flex justify-center mt-2 sm:mt-3'>
+                    <div className='w-full sm:max-w-xl md:max-w-2xl aspect-video'>
+                        <YouTube videoId={content?.videoId} opts={opts} className='h-fit' />
+                    </div>
+                </div>
+            )}
 
             {/* Content  */}
-            <div className='mt-3'>
+            <div className='mt-2 sm:mt-3'>
                 {content?.content?.map((item, index) => (
-                    <div className='p-5 bg-sky-50 mb-3 rounded-lg'>
-                        <h2 className='font-medium text-lg'>{item?.title}</h2>
+                    <div className='p-3 md:p-5 bg-sky-50 mb-3 rounded-lg'>
+                        <h2 className='font-semibold text-md md:text-lg '>{item?.title}</h2>
                         {/* <p className='whitespace-pre-wrap'>{item?.explanation}</p> */}
-                        <ReactMarkdown>{item?.explanation}</ReactMarkdown>
+                        <ReactMarkdown className='text-sm md:text-base'>{item?.explanation}</ReactMarkdown>
 
-                        {item?.code && <div className='p-4 bg-black text-white rounded-md my-3'>
+                        {item?.code && <div className='p-2 md:p-4 bg-black text-white rounded-md my-3'>
                             <pre>
-                                <code>{item?.code}</code>
+                                <div className='flex-1'>
+                                    <code className='text-sm md:text-base'>{item?.code}</code>
+                                </div>
                             </pre>
                         </div>}
                     </div>
