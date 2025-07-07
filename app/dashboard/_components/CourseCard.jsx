@@ -32,7 +32,7 @@ function CourseCard({ course, refreshData, displayUser = false }) {
           <p className='text-sm  bg-purple-50 text-primary p-1 my-1 w-fit rounded-md'>{course?.category}</p>
           <div className='flex items-center justify-between'>
             {/* <h2 className='flex gap-2 items-center p-1 bg-purple-50 px-2 rounded-md text-primary text-sm'><IoBookOutline />{course?.courseOutput?.NoOfChapters} chapters</h2> */}
-            <h2 className='text-sm text-gray-600 my-1'>{course?.courseOutput?.Level}, {course?.courseOutput?.NoOfChapters} chapters</h2>
+            <h2 className='text-sm text-gray-600 my-1'>{course?.courseOutput?.Level}, {course?.courseOutput?.NoOfChapters} Chapters</h2>
           </div>
 
           {displayUser && <div className='flex gap-2 items-center'>

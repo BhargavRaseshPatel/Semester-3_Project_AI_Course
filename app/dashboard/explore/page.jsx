@@ -25,7 +25,7 @@ function Explore() {
     <div className='w-full'>
       <h2 className='font-bold text-3xl'>Explore more Projects</h2>
       <p>Explore more project build with AI by other users</p>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4 md:gap-5 gap-2 w-full'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4 md:gap-5 gap-2 w-full mt-2'>
           {courseList?.map((course, index) => (
             <div key={index}>
               <CourseCard course={course} displayUser={true} />

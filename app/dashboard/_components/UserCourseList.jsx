@@ -28,7 +28,7 @@ function UserCourseList() {
     <div className='mt-10'>
       <h2 className='font-medium text-lg'>My AI Courses</h2>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4 md:gap-5 gap-2'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4 md:gap-5 gap-2 mt-2'>
         {courseList?.length > 0 ? courseList.map((course, index) => (
           <CourseCard course={course} key={index} refreshData={() => getUserCourses()}/>
         ))

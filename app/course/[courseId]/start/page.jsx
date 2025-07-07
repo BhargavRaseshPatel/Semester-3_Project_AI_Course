@@ -10,18 +10,7 @@ import { useUser } from '@clerk/nextjs'
 
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import Header from './_components/Header'
 
 // Menu items.
 const items = [
@@ -69,6 +58,7 @@ function CourseStart({ params }) {
       where(eq(CourseList.courseId, params.courseId))
     console.log(result[0])
     setCourse(result[0])
+    setSelectedChapter(result[0]?.courseOutput?.Chapters[0])
     GetSelectedChapterContent(0)
 
     if (user?.primaryEmailAddress?.emailAddress == result[0]?.createdBy) {
@@ -84,32 +74,28 @@ function CourseStart({ params }) {
     setChapterContent(result[0])
   }
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarContent>
-          <div className=' h-screen border-r shadow-sm'>
-            <h2 className='font-medium text-lg bg-primary p-3 text-white'>{course?.courseOutput?.CourseName}</h2>
-            <div>
-              {course?.courseOutput?.Chapters?.map((chapter, index) => (
-                <div key={index} className={`cursor-pointer hover:bg-purple-50 ${selectedChapter == chapter && 'bg-purple-100'}`}
-                  onClick={() => { setSelectedChapter(chapter); GetSelectedChapterContent(index) }}>
-                  <ChapterListCard chapter={chapter} index={index} />
-                </div>
-              ))}
+    <div className=''>
+      {/* Chapter List Side Bar  */}
+      <div className='fixed w-0 hidden lg:block lg:w-72 h-screen border-r shadow-sm'>
+        <h2 className='font-medium text-lg bg-primary p-3 text-white'>{course?.courseOutput?.CourseName}</h2>
+        <div>
+          {course?.courseOutput?.Chapters?.map((chapter, index) => (
+            <div key={index} className={`cursor-pointer hover:bg-purple-50 ${selectedChapter == chapter && 'bg-purple-100'}`}
+              onClick={() => { setSelectedChapter(chapter); GetSelectedChapterContent(index) }}>
+              <ChapterListCard chapter={chapter} index={index} />
             </div>
-          </div>
-        </SidebarContent>
-      </Sidebar>
-      {/* Increase the size of the trigger using a custom class or inline style */}
-      <div>
-
-        <SidebarTrigger className="w-16 h-16" style={{ fontSize: 48 }} />
-
-        <div className=''>
-          <ChapterContent chapter={selectedChapter} content={chapterContent} showCompleteButton={showCompleteButton} refreshData={() => GetCourse()} />
+          ))}
         </div>
       </div>
-    </SidebarProvider>
+      {/* Content Div  */}
+      <div>
+
+        <div className='lg:ml-72 pt-2'>
+          <Header course={course} selectChapter={setSelectedChapter} getContent={GetSelectedChapterContent} />
+          <ChapterContent chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()} />
+        </div>
+      </div>
+    </div>
   )
 }
 

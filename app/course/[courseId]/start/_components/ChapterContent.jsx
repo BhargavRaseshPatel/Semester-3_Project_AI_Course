@@ -15,43 +15,44 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
             autoplay: 0,
         },
     };
+    
 
     const makeComplete = () => {
         // Update the chapter as completed
-        db.update(chapterContentSchema).set({ readContent: true }).where(and(eq(chapterContentSchema.chapterId,content.chapterId),eq(chapterContentSchema.courseId,content.courseId))).execute()
+        db.update(chapterContentSchema).set({ readContent: true }).where(and(eq(chapterContentSchema.chapterId, content.chapterId), eq(chapterContentSchema.courseId, content.courseId))).execute()
         console.log('Completed')
         refreshData(true)
     }
 
     return (
-        <div className='p-10'>
+        <div className='px-10'>
             <h2 className='font-medium text-2xl'>{chapter?.ChapterName}</h2>
             <p className='text-gray-400 mt-3'>{chapter?.about}</p>
 
             {/* Video  */}
-            <div className='flex justify-center my-6'>
+            {content?.videoId && (<div className='flex justify-center my-6'>
                 <YouTube videoId={content?.videoId} opts={opts} />
-            </div>
+            </div>)}
 
             {/* Content  */}
-            <div>
+            <div className='mt-3'>
                 {content?.content?.map((item, index) => (
                     <div className='p-5 bg-sky-50 mb-3 rounded-lg'>
                         <h2 className='font-medium text-lg'>{item?.title}</h2>
                         {/* <p className='whitespace-pre-wrap'>{item?.explanation}</p> */}
                         <ReactMarkdown>{item?.explanation}</ReactMarkdown>
-                        
+
                         {item?.code && <div className='p-4 bg-black text-white rounded-md my-3'>
                             <pre>
                                 <code>{item?.code}</code>
                             </pre>
                         </div>}
                     </div>
-                ))} 
+                ))}
             </div>
 
             <div>
-                {content?.content && !content?.readContent && showCompleteButton &&<Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
+                {content?.content && !content?.readContent && showCompleteButton && <Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
             </div>
 
         </div>

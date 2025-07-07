@@ -9,7 +9,6 @@ function DashboardLayout({ children }) {
 
     return (
         <UserCourseListContext.Provider value={{userCourseList, setUserCourseList}}>
-            <div >
                 <div className='lg:w-64 hidden lg:block'>
                     <SlideBar showShadow/>
                 </div>
@@ -19,7 +18,6 @@ function DashboardLayout({ children }) {
                         {children}
                     </div>
                 </div>
-            </div>
         </UserCourseListContext.Provider>
     )
 }
