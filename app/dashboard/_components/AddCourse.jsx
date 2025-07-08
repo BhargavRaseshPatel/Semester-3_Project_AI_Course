@@ -17,7 +17,7 @@ function AddCourse() {
                 <p className='text-sm text-gray-500'>Create new course with AI, Share with friends and family</p>
             </div>
 
-            <Link className='md:mt-0 mt-3 w-fit' href={ userCourseList?.length >= 5 ? '/dashboard/upgrade' : '/create-course' }>
+            <Link className='md:mt-0 mt-3 w-fit' href={ userCourseList?.length >= 10 ? '/dashboard/upgrade' : '/create-course' }>
                 <Button className='text-xl md:w-fit p-5 h-10 w-full'>+ Create AI course</Button>
             </Link>
         </div>
