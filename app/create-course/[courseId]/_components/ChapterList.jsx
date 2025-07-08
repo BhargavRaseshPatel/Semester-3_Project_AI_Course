@@ -29,7 +29,7 @@ function ChapterList({ course, refreshData, chapterList = null, edit = true }) {
                             </div>
                         </div>
                         {/* { chapterList[index] == null ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : chapterList[index]?.readContent == false ? <HiMiniCheckCircle className='text-4xl text-gray-300 float-none' /> : <HiMiniCheckCircle className='text-4xl text-primary float-none' />} */}
-                        <div className='flex-1'>
+                        <div className='flex justify-end'>
                             {course?.createdBy == user?.primaryEmailAddress?.emailAddress ?
                                 chapterList == null ? null : chapterList.find(item => item?.chapterId == chapter?.ChapterId)?.readContent ?
                                     <HiMiniCheckCircle className='text-4xl text-primary h-7 w-7 md:h-10 md:w-10' /> :
