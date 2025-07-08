@@ -92,7 +92,7 @@ function CourseStart({ params }) {
 
         <div className='lg:ml-72'>
           <Header course={course} selectChapter={setSelectedChapter} getContent={GetSelectedChapterContent} />
-          <ChapterContent chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()} />
+          <ChapterContent showCompleteButton={showCompleteButton} chapter={selectedChapter} content={chapterContent} refreshData={() => GetCourse()} />
         </div>
       </div>
     </div>

@@ -46,19 +46,17 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
                         {/* <p className='whitespace-pre-wrap'>{item?.explanation}</p> */}
                         <ReactMarkdown className='text-sm md:text-base'>{item?.explanation}</ReactMarkdown>
 
-                        {item?.code && <div className='p-2 md:p-4 bg-black text-white rounded-md my-3'>
-                            <pre>
-                                <div className='flex-1'>
-                                    <code className='text-sm md:text-base'>{item?.code}</code>
-                                </div>
+                        {item?.code && (
+                            <pre style={{scrollbarWidth:"none"}} className='overflow-x-auto scroll-smooth hide-scrollbar p-2 md:p-4 bg-black text-white rounded-md my-3'>
+                                <code className='text-sm md:text-base whitespace-pre'>{item?.code}</code>
                             </pre>
-                        </div>}
+                        )}
                     </div>
                 ))}
             </div>
 
             <div>
-                {content?.content && !content?.readContent && showCompleteButton && <Button className='px-10 text-xl' onClick={() => makeComplete()}>Completed</Button>}
+                {content?.content && !content?.readContent && showCompleteButton && <Button className='px-10 text-xl mb-3' onClick={() => makeComplete()}>Completed</Button>}
             </div>
 
         </div>

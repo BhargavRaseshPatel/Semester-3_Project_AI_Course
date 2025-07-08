@@ -59,8 +59,8 @@ function SlideBar({showShadow = false}) {
                 ))}
             </ul>
             <div className='absolute bottom-10 w-[80%]'>
-                <Progress value={userCourseList?.length / 15 * 100} max={100} />
-                <h3>{userCourseList?.length} out of 15 course created</h3>
+                <Progress value={userCourseList?.length / 10 * 100} max={100} />
+                <h3>{userCourseList?.length} out of 10 course created</h3>
                 <h2 className='text-xs text-gray-500'>upgrade your plan for unlimited course generate</h2>
             </div>
         </div>
