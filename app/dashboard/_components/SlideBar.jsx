@@ -43,7 +43,7 @@ function SlideBar({showShadow = false}) {
     ]
     const path = usePathname()
     return (
-        <div className={`fixed h-full md:w-64 p-5 ${showShadow ? "shadow-xl" : ""}`}>
+        <div className={`fixed h-full md:w-64 p-5 ${showShadow ? "shadow-xl" : " mt-4"}`}>
             <div className='flex items-center gap-2 rounded-lg '>
                 <Image src={'/ai-course-create.png'} width={200} height={50} alt="logo image" className='mb-10 w-full rounded-lg' />
             </div>

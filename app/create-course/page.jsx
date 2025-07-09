@@ -1,9 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import React, { useContext, useEffect, useState } from 'react'
-import { HiSquares2X2 } from "react-icons/hi2";
-import { HiLightBulb } from "react-icons/hi2";
-import { HiClipboardDocumentList } from "react-icons/hi2";
 import SelectCategory from './_components/SelectCategory';
 import TopicDescription from './_components/TopicDescription';
 import SelectOption from './_components/SelectOption';
@@ -15,31 +12,13 @@ import { CourseList } from '@/configs/schema';
 import uuid4 from 'uuid4';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { StepperOptions } from '../_shared/StepperList';
 
 function CreateCourse() {
     const [activeIndex, setActiveIndex] = useState(0)
 
     const { user } = useUser();
     const router = useRouter()
-
-    const StepperOptions = [
-        {
-            id: 1,
-            name: 'Category',
-            icon: <HiSquares2X2 />
-
-        },
-        {
-            id: 2,
-            name: 'Topic',
-            icon: <HiLightBulb />
-        },
-        {
-            id: 3,
-            name: 'Options',
-            icon: <HiClipboardDocumentList />
-        }
-    ]
 
     const { userCourseInput, setUserCourseInput } = useContext(UserInputContext)
     const [loading, setLoading] = useState(false)

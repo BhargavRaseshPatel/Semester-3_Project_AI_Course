@@ -12,7 +12,8 @@ import { Button } from '@/components/ui/button';
 function CourseCard({ course, refreshData, displayUser = false }) {
   const handleOnDelete = async () => {
     const resp = await db.delete(CourseList).where(eq(CourseList.courseId, course?.courseId)).returning({ id: CourseList?.id })
-    db.delete(chapterContentSchema).where(eq(chapterContentSchema.courseId, course?.courseId))
+    await db.delete(chapterContentSchema).where(eq(chapterContentSchema.courseId, course?.courseId)).returning({ id: chapterContentSchema?.id })
+
     if (resp) {
       refreshData()
     }

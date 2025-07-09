@@ -24,10 +24,7 @@ import {
 function DropdownOption({ children, handleOnDelete }) {
 
     const [openAlert, setOpenAlert] = useState(false)
-    const onDeleteClick = () => {
-        handleOnDelete()
-    }
-
+    
     return (
         <div>
             <DropdownMenu>
