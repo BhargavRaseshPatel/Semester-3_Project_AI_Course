@@ -13,6 +13,7 @@ import uuid4 from 'uuid4';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { StepperOptions } from '../_shared/StepperList';
+import { generateImage } from '@/configs/replicate';
 
 function CreateCourse() {
     const [activeIndex, setActiveIndex] = useState(0)
@@ -46,6 +47,27 @@ function CreateCourse() {
         return false
     }
 
+    const generateImageFromBackend = async (topic) => {
+        try {
+            const response = await fetch("/api/generate-image", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ topic })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || "Image generation failed");
+            return data.imageUrl;
+        } catch (err) {
+            console.error("Error:", err.message);
+            return "";
+        }
+    };
+
+
     const GenerateCourseLayout = async () => {
         setLoading(true);
         const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Along with ChapterName,about, Duration: '
@@ -69,12 +91,13 @@ function CreateCourse() {
                 ChapterId: index // Add or update the ChapterId property
             }))
         };
+        const imageUrl = await generateImageFromBackend(userCourseInput?.topic);
+        console.log("Image URL:", imageUrl);
 
-        setLoading(false);
-        SaveCourseLayoutInDb(updatedJsonData);
+        SaveCourseLayoutInDb(updatedJsonData, imageUrl);
     }
 
-    const SaveCourseLayoutInDb = async (courseLayout) => {
+    const SaveCourseLayoutInDb = async (courseLayout, imageUrl) => {
         setLoading(true);
         var id = uuid4(); // Course Id
         const result = await db.insert(CourseList).values({
@@ -85,10 +108,11 @@ function CreateCourse() {
             courseOutput: courseLayout,
             createdBy: user?.primaryEmailAddress?.emailAddress,
             userName: user?.fullName,
-            userProfileImage: user?.imageUrl
+            userProfileImage: user?.imageUrl,
+            imageUrl: imageUrl
         })
 
-        console.log("Finished", result);
+        // console.log("Finished", result);
         router.replace('/create-course/' + id);
         setLoading(false);
     }
@@ -108,9 +132,9 @@ function CreateCourse() {
                                 </div>
                                 <h2 className='mt-4'>{item.name}</h2>
                             </div>
-                            {index != StepperOptions.length - 1 && 
-                            <div className={`h-1 w-[40px] sm-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-purple-500'}`}>
-                            </div>}
+                            {index != StepperOptions.length - 1 &&
+                                <div className={`h-1 w-[40px] sm-[50px] md:w-[100px] rounded-full lg:w-[170px] bg-gray-300 ${activeIndex - 1 >= index && 'bg-purple-500'}`}>
+                                </div>}
                         </div>
                     ))}
                 </div>
