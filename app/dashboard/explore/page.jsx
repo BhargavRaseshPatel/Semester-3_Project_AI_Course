@@ -17,8 +17,12 @@ function Explore() {
   const GetAllCourse = async () => {
     const result = await db.select().from(CourseList)
       .limit(8).offset(pageIndex * 8)
-
-    setCourseList(result)
+      console.log("Result" , result)
+      if(result.length != 0){
+        setCourseList(result)
+      }else {
+        setPageIndex(pageIndex - 1)
+      }
   }
 
   return (
@@ -36,7 +40,7 @@ function Explore() {
       <div className='flex justify-between mt-5'>
         {pageIndex != 0 && <Button onClick={() => setPageIndex(pageIndex - 1)}>Previous Page</Button>}
         <Button onClick={() => setPageIndex(pageIndex + 1)}>Next Page</Button>
-      </div>
+      </div> 
     </div>
   )
 }

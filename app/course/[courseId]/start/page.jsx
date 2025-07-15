@@ -56,7 +56,7 @@ function CourseStart({ params }) {
   const GetCourse = async () => {
     const result = await db.select().from(CourseList).
       where(eq(CourseList.courseId, params.courseId))
-    console.log(result[0])
+    // console.log(result[0])
     setCourse(result[0])
     setSelectedChapter(result[0]?.courseOutput?.Chapters[0])
     GetSelectedChapterContent(0)
@@ -70,7 +70,6 @@ function CourseStart({ params }) {
     const result = await db.select().from(chapterContentSchema)
       .where(and(eq(chapterContentSchema.courseId, params.courseId), eq(chapterContentSchema.chapterId, chapterId)))
 
-    // console.log("Result : ",result[0])
     setChapterContent(result[0])
   }
   return (

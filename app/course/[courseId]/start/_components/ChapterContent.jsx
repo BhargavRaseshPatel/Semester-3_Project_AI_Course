@@ -25,7 +25,7 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
     }
 
     return (
-        <div className='md:px-10 px-5 mt-1 sm:mt-2'>
+        <div className='md:px-10 px-5 py-2 mt-1 sm:mt-2'>
             <h2 className='font-medium text-2xl'>{chapter?.ChapterName}</h2>
             <p className='text-gray-400 mt-1 sm:mt-1'>{chapter?.about}</p>
 
@@ -41,7 +41,7 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
             {/* Content  */}
             <div className='mt-2 sm:mt-3'>
                 {content?.content?.map((item, index) => (
-                    <div className='p-3 md:p-5 bg-sky-50 mb-3 rounded-lg'>
+                    <div className='p-3 md:p-5 bg-sky-50 mb-3 rounded-lg' key={index}>
                         <h2 className='font-semibold text-md md:text-lg '>{item?.title}</h2>
                         {/* <p className='whitespace-pre-wrap'>{item?.explanation}</p> */}
                         <ReactMarkdown className='text-sm md:text-base'>{item?.explanation}</ReactMarkdown>
@@ -56,7 +56,7 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
             </div>
 
             <div>
-                {content?.content && !content?.readContent && showCompleteButton && <Button className='px-10 text-xl mb-3' onClick={() => makeComplete()}>Completed</Button>}
+                {content?.content && !content?.readContent && showCompleteButton && <Button className='px-10 text-xl mb-3' onClick={() => makeComplete()}>Mark as Complete</Button>}
             </div>
 
         </div>

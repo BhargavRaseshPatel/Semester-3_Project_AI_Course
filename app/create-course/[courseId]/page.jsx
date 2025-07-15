@@ -20,19 +20,16 @@ function courseLayout({ params }) {
     const router = useRouter()
 
     useEffect(() => {
-        console.log(params)
         params.courseId && GetCourse()
     }, [params, user])
 
     const GetCourse = async () => {
         const result = await db.select().from(CourseList).
             where(eq(CourseList.courseId, params.courseId), eq(CourseList.createdBy, user?.primaryEmailAddress?.emailAddress))
-        // console.log(result)
         setCourse(result[0])
     }
 
     const GenerateChapterContent = async () => {
-        // console.log('clicked');
         setLoading(true);
         const chapters = course?.courseOutput?.Chapters;
     

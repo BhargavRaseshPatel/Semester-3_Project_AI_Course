@@ -20,7 +20,6 @@ function UserCourseList() {
   const getUserCourses = async () => {
     const result = await db.select().from(CourseList)
       .where(eq(CourseList?.createdBy, user?.primaryEmailAddress?.emailAddress))
-    console.log(result)
     setCourseList(result)
     setUserCourseList(result) // Get all courses created by the user
   }

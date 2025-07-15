@@ -48,9 +48,9 @@ function SlideBar({showShadow = false}) {
                 <Image src={'/ai-course-create.png'} width={200} height={50} alt="logo image" className='mb-10 w-full rounded-lg' />
             </div>
             <ul>
-                {Menu.map((item, map) => (
-                    <Link href={item.path} key={map}>
-                        <div className={`flex items-center gap-2 text-gray-600 p-3 cursor-pointer  mb-2
+                {Menu.map((item, index) => (
+                    <Link href={item.path} key={index}>
+                        <div key={index} className={`flex items-center gap-2 text-gray-600 p-3 cursor-pointer  mb-2
                  hover:bg-gray-100 hover:text-black rounded-lg ${item.path == path && 'bg-gray-100 text-black'}`}>
                             <div className='text-2xl'>{item.icon}</div>
                             <h2>{item.name} </h2>

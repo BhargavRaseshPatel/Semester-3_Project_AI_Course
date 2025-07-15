@@ -7,10 +7,6 @@ import { useUser } from '@clerk/nextjs';
 function ChapterList({ course, refreshData, chapterList = null, edit = true }) {
     const { user } = useUser()
 
-    useEffect(() => {
-        console.log(chapterList)
-    })
-
     return (
         <div className='mt-3'>
             <h2 className='font-medium text-xl'>Chapters</h2>

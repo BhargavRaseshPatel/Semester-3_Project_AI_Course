@@ -33,7 +33,7 @@ function Header({ course, selectChapter, getContent }) {
                         <h2 className='font-medium text-lg bg-primary p-3 rounded-tl-lg rounded-tr-lg text-white'>{course?.courseOutput?.CourseName}</h2>
                         <div>
                             {course?.courseOutput?.Chapters?.map((chapter, index) => (
-                                <SheetClose asChild>
+                                <SheetClose asChild key={index}>
                                     <div key={index} className={`cursor-pointer hover:bg-purple-50 ${selectChapter == chapter && 'bg-purple-100'}`}
                                         onClick={() => { selectChapter(chapter); getContent(index) }}>
                                         <ChapterListCard chapter={chapter} index={index} />
