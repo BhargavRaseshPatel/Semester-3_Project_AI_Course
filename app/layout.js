@@ -12,10 +12,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <ClerkProvider>
-        <GoogleOneTap />
-        <body className={inter.className}>{children}</body>
-      </ClerkProvider>
+      <head />
+      <body className={inter.className}>
+        <ClerkProvider>
+          <GoogleOneTap />
+          <main>{children}</main>
+          <footer className="text-center text-sm text-gray-500 mt-2 mb-4">
+            © {new Date().getFullYear()} AI Course Creator. All rights reserved.
+          </footer>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

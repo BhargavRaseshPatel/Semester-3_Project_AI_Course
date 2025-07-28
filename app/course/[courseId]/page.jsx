@@ -1,5 +1,5 @@
 "use client";
-import Header from '@/app/_components/Header';
+import Header from './_components/Header.jsx';
 import ChapterList from '@/app/create-course/[courseId]/_components/ChapterList';
 import CourseBasicInfo from '@/app/create-course/[courseId]/_components/CourseBasicInfo';
 import CourseDetail from '@/app/create-course/[courseId]/_components/CourseDetail';
@@ -34,6 +34,7 @@ function Course({ params }) {
         <div>
             {/* <Header /> */}
             <div className='px-3 md:px-6 lg:px-12'>
+                <Header />
                 <CourseBasicInfo course={course} edit={false} />
                 <CourseDetail course={course} />
                 <ChapterList course={course} chapterList={chapterList} edit={false} />

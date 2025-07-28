@@ -11,6 +11,7 @@ import { useUser } from '@clerk/nextjs'
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 
 import Header from './_components/Header'
+import Link from 'next/link'
 
 // Menu items.
 const items = [
@@ -76,7 +77,9 @@ function CourseStart({ params }) {
     <div className='w-screen max-w-screen overflow-x-hidden'>
       {/* Chapter List Side Bar  */}
       <div className='fixed w-0 hidden lg:block lg:w-72 h-screen border-r shadow-sm'>
-        <h2 className='font-medium text-lg bg-primary p-3 text-white'>{course?.courseOutput?.CourseName}</h2>
+        <Link href={'/dashboard'}>
+          <h2 className='font-medium text-lg bg-primary p-3 text-white'>{course?.courseOutput?.CourseName}</h2>
+        </Link>
         <div>
           {course?.courseOutput?.Chapters?.map((chapter, index) => (
             <div key={index} className={`cursor-pointer hover:bg-purple-50 ${selectedChapter == chapter && 'bg-purple-100'}`}

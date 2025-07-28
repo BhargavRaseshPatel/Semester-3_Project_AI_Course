@@ -26,6 +26,7 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
 
     return (
         <div className='md:px-10 px-5 py-2 mt-1 sm:mt-2'>
+            
             <h2 className='font-medium text-2xl'>{chapter?.ChapterName}</h2>
             <p className='text-gray-400 mt-1 sm:mt-1'>{chapter?.about}</p>
 
