@@ -22,7 +22,7 @@ function CourseCard({ course, refreshData, displayUser = false }) {
     <div className='sm:none mx-auto sm:w-full w-80 h-full justify-center flex'>
       <div className='shadow-sm w-full rounded-lg flex flex-col gap-1 border border-gray-300 p-2 py-1 cursor-pointer'>
         <Link href={'/course/' + course?.courseId} className='flex justify-center'>
-          <Image src={course?.imageUrl ?? '/courseImage.png'} alt='course banner' priority width={200} height={200}
+          <Image src={course?.imageUrl && course.imageUrl.trim() !== '' ? course.imageUrl : '/courseImage.png'} alt='course banner' priority width={200} height={200}
             className='object-center rounded-lg' />
         </Link>
         <div className='p-2'>

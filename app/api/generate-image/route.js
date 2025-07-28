@@ -7,7 +7,7 @@ export async function POST(request) {
     const topic = body.topic || "MySQL";
 
     const replicate = new Replicate({
-      auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
+      auth: process.env.REPLICATE_API_TOKEN,
     });
 
     const input = {

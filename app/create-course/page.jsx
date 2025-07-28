@@ -13,7 +13,6 @@ import uuid4 from 'uuid4';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { StepperOptions } from '../_shared/StepperList';
-import { generateImage } from '@/configs/replicate';
 
 function CreateCourse() {
     const [activeIndex, setActiveIndex] = useState(0)

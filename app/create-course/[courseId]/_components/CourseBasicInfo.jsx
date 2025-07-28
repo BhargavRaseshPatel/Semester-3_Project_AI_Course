@@ -28,7 +28,7 @@ function CourseBasicInfo({ course, refreshData, edit = true }) {
                 </div>
                 <div className='flex justify-center'>
                     <label htmlFor='upload-image' className='cursor-pointer'>
-                        <Image alt='image' src={course?.imageUrl ?? '/book.png'} width={200} height={200} className='rounded-xl w-[400px] h-[300px] object-fill' />
+                        <Image alt='image' src={course?.imageUrl && course.imageUrl.trim() !== '' ? course.imageUrl :'/book.png'} width={200} height={200} className='rounded-xl w-[400px] h-[300px] object-fill' />
                         {edit && <input type='file' id='upload-image' className='opacity-0' onChange={onFileSelected} />}
                     </label>
                 </div>
