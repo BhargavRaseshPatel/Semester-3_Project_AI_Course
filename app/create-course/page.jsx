@@ -23,9 +23,6 @@ function CreateCourse() {
     const { userCourseInput, setUserCourseInput } = useContext(UserInputContext)
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        console.log(userCourseInput)
-    }, [userCourseInput])
 
     // Used to check Next Button is disabled or not
 
@@ -68,32 +65,34 @@ function CreateCourse() {
 
 
     const GenerateCourseLayout = async () => {
-        setLoading(true);
-        const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Along with ChapterName,about, Duration: '
-        const USER_INPUT_PROMPT = `Category: ${userCourseInput.category} \n Topic: ${userCourseInput?.topic} \n Level: ${userCourseInput?.level} \n Duration: ${userCourseInput?.duration} \n DisplayVideo: ${userCourseInput?.displayVideo} \n NoOfChapters: ${userCourseInput?.noOfChapter}`;
-        const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
-        console.log(FINAL_PROMPT);
+        try {
+            setLoading(true);
+            const BASIC_PROMPT = 'Generate A Course Tutorial on Following Detail with field as CourseName, Description, Along with ChapterName,about, Duration: '
+            const USER_INPUT_PROMPT = `Category: ${userCourseInput.category} \n Topic: ${userCourseInput?.topic} \n Level: ${userCourseInput?.level} \n Duration: ${userCourseInput?.duration} \n DisplayVideo: ${userCourseInput?.displayVideo} \n NoOfChapters: ${userCourseInput?.noOfChapter}`;
+            const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
 
-        const result = await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
-        console.log(result.response?.text());
-        console.log(JSON.parse(result.response?.text()));
-        // result.response?.text().Chapters?.map((chapter, index) => {
-        //     [...chapter, ChapterId=index]
-        // })
+            const result = await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
+            if (!result.response) {
+                throw new Error('Failed to generate course layout');
+            }
 
-        const json_data = JSON.parse(result.response?.text());
-
-        const updatedJsonData = {
-            ...json_data, // Spread the other properties of json_data
-            Chapters: json_data?.Chapters.map((chapter, index) => ({
-                ...chapter, // Keep the existing properties of each chapter
-                ChapterId: index // Add or update the ChapterId property
-            }))
-        };
-        const imageUrl = await generateImageFromBackend(userCourseInput?.topic);
-        console.log("Image URL:", imageUrl);
-
-        SaveCourseLayoutInDb(updatedJsonData, imageUrl);
+            const json_data = JSON.parse(result.response?.text());
+            const updatedJsonData = {
+                ...json_data,
+                Chapters: json_data?.Chapters.map((chapter, index) => ({
+                    ...chapter,
+                    ChapterId: index
+                }))
+            };
+            
+            const imageUrl = await generateImageFromBackend(userCourseInput?.topic);
+            await SaveCourseLayoutInDb(updatedJsonData, imageUrl);
+        } catch (error) {
+            console.error('Error generating course layout:', error);
+            alert('Failed to generate course layout. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     }
 
     const SaveCourseLayoutInDb = async (courseLayout, imageUrl) => {

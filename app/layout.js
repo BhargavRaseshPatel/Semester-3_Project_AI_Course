@@ -13,11 +13,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head />
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ClerkProvider>
           <GoogleOneTap />
-          <main>{children}</main>
-          <footer className="text-center text-sm text-gray-500 mt-2 mb-4">
+          <main className="flex-grow">{children}</main>
+          <footer className="text-center text-sm text-gray-500 pb-4">
             © {new Date().getFullYear()} AI Course Creator. All rights reserved.
           </footer>
         </ClerkProvider>

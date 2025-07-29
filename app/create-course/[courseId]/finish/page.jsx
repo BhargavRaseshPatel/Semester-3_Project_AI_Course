@@ -15,14 +15,12 @@ function FinishScreen({params}) {
   const router = useRouter()
 
   useEffect(() => {
-      console.log(params)
       params.courseId && GetCourse()
   }, [params, user])
 
   const GetCourse = async () => {
       const result = await db.select().from(CourseList).
           where(and(eq(CourseList.courseId, params.courseId), eq(CourseList.createdBy, user?.primaryEmailAddress?.emailAddress)))
-      console.log(result)
       setCourse(result[0])
   }
 

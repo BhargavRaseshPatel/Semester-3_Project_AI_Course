@@ -20,7 +20,6 @@ function ChapterContent({ chapter, content, refreshData, showCompleteButton }) {
     const makeComplete = () => {
         // Update the chapter as completed
         db.update(chapterContentSchema).set({ readContent: true }).where(and(eq(chapterContentSchema.chapterId, content.chapterId), eq(chapterContentSchema.courseId, content.courseId))).execute()
-        console.log('Completed')
         refreshData(true)
     }
 

@@ -67,7 +67,7 @@ function SelectOption() {
 
                 <div>
                     <label className='text-sm'>No of Chapter</label>
-                    <Input max={15} min={1} type="number" defaultValue={userCourseInput?.noOfChapter}
+                    <Input max={8} min={1} type="number" defaultValue={userCourseInput?.noOfChapter}
                     onChange={(event) => handleInputChange('noOfChapter', event.target.value)}/>
                 </div>
             </div>

@@ -17,7 +17,6 @@ function Explore() {
   const GetAllCourse = async () => {
     const result = await db.select().from(CourseList)
       .limit(8).offset(pageIndex * 8)
-      console.log("Result" , result)
       if(result.length != 0){
         setCourseList(result)
       }else {
